@@ -2,18 +2,15 @@
 <RelativeLayout
     android:id="@+id/rl_background"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="divyanshu.miscellaneous.MainActivity"
-    android:background="#FF0000">
+    tools:context="divyanshu.miscellaneous.MainActivity">
 
     <RelativeLayout
         android:id="@+id/rl_foreground"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:background="#FF0000"
         android:visibility="invisible">
     </RelativeLayout>
 

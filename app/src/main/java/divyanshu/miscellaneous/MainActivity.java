@@ -30,10 +30,16 @@ public class MainActivity extends AppCompatActivity {
         colorIndex = 0;
 
         colorArray = new int[]{
-                Color.parseColor("#FF0000"),
-                Color.parseColor("#00FF00"),
-                Color.parseColor("#FF00FF"),
-                Color.parseColor("#FFFF00")};
+                Color.parseColor("#0588FA"),
+                Color.parseColor("#00CBFB"),
+                Color.parseColor("#0087FB"),
+                Color.parseColor("#FCBA04"),
+                Color.parseColor("#FC5510"),
+                Color.parseColor("#DC0F65")
+        };
+
+        rl_background.setBackgroundColor(colorArray[0]);
+        rl_foreground.setBackgroundColor(colorArray[0]);
 
         rl_background.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    rl_background.setBackgroundColor(colorArray[colorIndex % 4]);
+                    rl_background.setBackgroundColor(colorArray[colorIndex % colorArray.length]);
                     rl_foreground.setVisibility(View.INVISIBLE);
                 }
 
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            rl_foreground.setBackgroundColor(colorArray[++colorIndex % 4]);
+            rl_foreground.setBackgroundColor(colorArray[++colorIndex % colorArray.length]);
             rl_foreground.setVisibility(View.VISIBLE);
             anim.start();
         }
