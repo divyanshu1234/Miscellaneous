@@ -14,10 +14,18 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nex3z.flowlayout.FlowLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     RelativeLayout rl_background;
     RelativeLayout rl_foreground;
+    FlowLayout fl_activity_main;
+
+    List<View> flChildViews;
 
     int colorIndex;
     int[] colorArray;
@@ -33,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         rl_background = (RelativeLayout) findViewById(R.id.rl_background);
         rl_foreground = (RelativeLayout) findViewById(R.id.rl_foreground);
+        fl_activity_main = (FlowLayout) findViewById(R.id.fl_activity_main);
 
         initializeBackground();
     }
@@ -51,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
         rl_background.setBackgroundColor(colorArray[0]);
         rl_foreground.setBackgroundColor(colorArray[0]);
+
+        flChildViews = new ArrayList<>();
+        for (int i = 0; i < fl_activity_main.getChildCount(); ++i){
+            flChildViews.add(fl_activity_main.getChildAt(i));
+        }
     }
 
 
@@ -64,13 +78,15 @@ public class MainActivity extends AppCompatActivity {
 
         view.setSelected(!view.isSelected());
 
-        if (view.isSelected()){
-            ((TextView) view).setTextColor(colorArray[colorIndex % colorArray.length]);
-            view.setBackgroundResource(R.drawable.rounded_corner_pressed);
-        }
-        else{
-            ((TextView) view).setTextColor(Color.parseColor("#FFFFFF"));
-            view.setBackgroundResource(R.drawable.rounded_corner_unpressed);
+        for (View child : flChildViews){
+            if (child.isSelected()){
+                ((TextView) child).setTextColor(colorArray[colorIndex % colorArray.length]);
+                child.setBackgroundResource(R.drawable.rounded_corner_pressed);
+            }
+            else{
+                ((TextView) child).setTextColor(Color.parseColor("#FFFFFF"));
+                child.setBackgroundResource(R.drawable.rounded_corner_unpressed);
+            }
         }
     }
 
@@ -80,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
             int finalRadius = (int) Math.hypot(rl_background.getWidth(), rl_background.getHeight());
             Animator anim = ViewAnimationUtils.createCircularReveal(rl_foreground, cx, cy, 0, finalRadius);
-            anim.setDuration(500);
+            anim.setDuration(300);
 
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
