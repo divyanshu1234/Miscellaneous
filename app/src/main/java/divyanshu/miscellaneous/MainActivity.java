@@ -2,12 +2,17 @@ package divyanshu.miscellaneous;
 
 import android.animation.Animator;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,16 +22,22 @@ public class MainActivity extends AppCompatActivity {
     int colorIndex;
     int[] colorArray;
 
-    MotionEvent touchEvent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         setContentView(R.layout.activity_main);
 
         rl_background = (RelativeLayout) findViewById(R.id.rl_background);
         rl_foreground = (RelativeLayout) findViewById(R.id.rl_foreground);
 
+        initializeBackground();
+    }
+
+    private void initializeBackground() {
         colorIndex = 0;
 
         colorArray = new int[]{
@@ -40,38 +51,38 @@ public class MainActivity extends AppCompatActivity {
 
         rl_background.setBackgroundColor(colorArray[0]);
         rl_foreground.setBackgroundColor(colorArray[0]);
-
-        rl_background.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                touchEvent = motionEvent;
-                return false;
-            }
-        });
-
-        rl_background.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeBackgroundColor((int) touchEvent.getX(), (int) touchEvent.getY());
-            }
-        });
     }
 
+
+    public void buttonClick(View view) {
+        int[] location = new  int[2];
+        view.getLocationInWindow(location);
+
+        int cx = location[0] + view.getWidth() / 2;
+        int cy = location[1] + view.getHeight() / 2;
+        changeBackgroundColor(cx, cy);
+
+        view.setSelected(!view.isSelected());
+
+        if (view.isSelected()){
+            ((TextView) view).setTextColor(colorArray[colorIndex % colorArray.length]);
+            view.setBackgroundResource(R.drawable.rounded_corner_pressed);
+        }
+        else{
+            ((TextView) view).setTextColor(Color.parseColor("#FFFFFF"));
+            view.setBackgroundResource(R.drawable.rounded_corner_unpressed);
+        }
+    }
 
     public void changeBackgroundColor(int cx, int cy) {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
 
             int finalRadius = (int) Math.hypot(rl_background.getWidth(), rl_background.getHeight());
-
             Animator anim = ViewAnimationUtils.createCircularReveal(rl_foreground, cx, cy, 0, finalRadius);
+            anim.setDuration(500);
 
             anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-
-                }
-
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     rl_background.setBackgroundColor(colorArray[colorIndex % colorArray.length]);
@@ -79,13 +90,15 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animator) {
+                public void onAnimationStart(Animator animator) {
+                }
 
+                @Override
+                public void onAnimationCancel(Animator animator) {
                 }
 
                 @Override
                 public void onAnimationRepeat(Animator animator) {
-
                 }
             });
 
@@ -94,5 +107,4 @@ public class MainActivity extends AppCompatActivity {
             anim.start();
         }
     }
-
 }
