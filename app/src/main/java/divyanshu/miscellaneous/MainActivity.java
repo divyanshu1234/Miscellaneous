@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.nex3z.flowlayout.FlowLayout;
 
 import java.util.ArrayList;

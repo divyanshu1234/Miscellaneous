@@ -34,4 +34,14 @@
         app:childSpacingForLastRow="auto"
         android:layout_centerInParent="true"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#66FFFFFF"
+        android:text="Continue"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>
