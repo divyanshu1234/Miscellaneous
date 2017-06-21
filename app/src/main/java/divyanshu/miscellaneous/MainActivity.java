@@ -49,15 +49,9 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); ++i){
-                    JSONObject jo = null;
-                    try {
-                        jo = response.getJSONObject(i);
-                        Log.d("Error", jo.getString("name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+
+                Log.d("Error", response.length() + "");
+
             }
         },
                 new Response.ErrorListener() {
@@ -93,7 +87,15 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
+        CustomRequest cr = new CustomRequest(Request.Method.POST, URL, body, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+            }
+        }, null);
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jr);
+        requestQueue.add(cr);
     }
 }
