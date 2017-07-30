@@ -1,7 +1,9 @@
 package divyanshu.miscellaneous;
 
 import android.animation.Animator;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -63,49 +65,25 @@ public class MainActivity extends AppCompatActivity {
         initializeAnimation();
     }
 
-    private void initializeAnimation() {
-        tv_almost_done.animate().alpha(0.0f).setStartDelay(1000).setDuration(500).setListener(new Animator.AnimatorListener() {
-            @Override public void onAnimationEnd(Animator animation) {
-                tv_but_first.animate().alpha(1.0f).setDuration(500).start();
-            }
-            @Override public void onAnimationStart(Animator animation) {}
-            @Override public void onAnimationCancel(Animator animation) {}
-            @Override public void onAnimationRepeat(Animator animation) {}
-        }).start();
-
-        rl_text_animation
-                .animate()
-                .alpha(0.0f)
-                .setStartDelay(3000)
-                .setDuration(500)
-                .setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                rl_text_animation.setVisibility(View.GONE);
-                rl_content.animate().alpha(1.0f).setDuration(500).start();
-            }
-            @Override public void onAnimationStart(Animator animation) {}
-            @Override public void onAnimationCancel(Animator animation) {}
-            @Override public void onAnimationRepeat(Animator animation) {}
-        }).start();
-    }
-
-
     private void initializeBackground() {
         colorIndex = 0;
 
+        Resources resources = getResources();
+        Resources.Theme theme = getTheme();
+
         colorArray = new int[]{
-                Color.parseColor("#0588FA"),
-                Color.parseColor("#00CBFB"),
-                Color.parseColor("#0087FB"),
-                Color.parseColor("#FCBA04"),
-                Color.parseColor("#FC5510"),
-                Color.parseColor("#DC0F65")
+                ResourcesCompat.getColor(resources, R.color.bg_color_0, theme),
+                ResourcesCompat.getColor(resources, R.color.bg_color_1, theme),
+                ResourcesCompat.getColor(resources, R.color.bg_color_2, theme),
+                ResourcesCompat.getColor(resources, R.color.bg_color_3, theme),
+                ResourcesCompat.getColor(resources, R.color.bg_color_4, theme),
+                ResourcesCompat.getColor(resources, R.color.bg_color_5, theme),
         };
 
         rl_background.setBackgroundColor(colorArray[0]);
         rl_foreground.setBackgroundColor(colorArray[0]);
     }
+
 
     private void createChoiceList() {
         choiceList = new ArrayList<>();
@@ -129,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         choiceList.add("Word Games");
         choiceList.add("World Fest");
         choiceList.add("Writing");
-
     }
 
     private void addChildViewsToFl() {
@@ -149,6 +126,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void initializeAnimation() {
+        tv_almost_done
+                .animate()
+                .alpha(0.0f)
+                .setStartDelay(1000)
+                .setDuration(500)
+                .setListener(new Animator.AnimatorListener() {
+            @Override public void onAnimationEnd(Animator animation) {
+                tv_but_first.animate().alpha(1.0f).setDuration(500).start();
+            }
+            @Override public void onAnimationStart(Animator animation) {}
+            @Override public void onAnimationCancel(Animator animation) {}
+            @Override public void onAnimationRepeat(Animator animation) {}
+        }).start();
+
+        rl_text_animation
+                .animate()
+                .alpha(0.0f)
+                .setStartDelay(3000)
+                .setDuration(500)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        rl_text_animation.setVisibility(View.GONE);
+                        rl_content
+                                .animate()
+                                .alpha(1.0f)
+                                .setDuration(500)
+                                .start();
+                    }
+                    @Override public void onAnimationStart(Animator animation) {}
+                    @Override public void onAnimationCancel(Animator animation) {}
+                    @Override public void onAnimationRepeat(Animator animation) {}
+                }).start();
+    }
+
 
     public void changeBackgroundColor(int cx, int cy) {
 
@@ -163,14 +176,14 @@ public class MainActivity extends AppCompatActivity {
                 public void onAnimationStart(Animator animator) {
                     rl_foreground.setBackgroundColor(colorArray[++colorIndex % colorArray.length]);
                     rl_foreground.setVisibility(View.VISIBLE);
+
+                    b_continue.setTextColor(colorArray[colorIndex % colorArray.length]);
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     rl_background.setBackgroundColor(colorArray[colorIndex % colorArray.length]);
                     rl_foreground.setVisibility(View.INVISIBLE);
-
-                    b_continue.setTextColor(colorArray[colorIndex % colorArray.length]);
                 }
 
                 @Override public void onAnimationCancel(Animator animator) {}
