@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setTextSize(18.0f);
             textView.setTextColor(Color.parseColor("#FFFFFF"));
             textView.setBackgroundResource(R.drawable.rounded_corner_unpressed);
-            textView.setOnClickListener(clickListener);
+            textView.setOnClickListener(choiceItemClickListener);
             textView.setClickable(true);
             fl_activity_main.addView(textView);
             flChildTextViews.add(textView);
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
+    View.OnClickListener choiceItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             view.setSelected(!view.isSelected());
@@ -220,5 +220,4 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
 }
