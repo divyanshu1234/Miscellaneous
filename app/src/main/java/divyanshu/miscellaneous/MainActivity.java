@@ -2,17 +2,16 @@ package divyanshu.miscellaneous;
 
 import android.animation.Animator;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.nex3z.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
@@ -20,9 +19,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    RelativeLayout rl_text_animation;
+    RelativeLayout rl_content;
     RelativeLayout rl_background;
     RelativeLayout rl_foreground;
     FlowLayout fl_activity_main;
+
+    TextView tv_almost_done;
+    TextView tv_but_first;
+
+    Button b_continue;
 
     List<String> choiceList;
     List<TextView> flChildTextViews;
@@ -40,14 +46,50 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        rl_text_animation = (RelativeLayout) findViewById(R.id.rl_text_animation);
+        rl_content = (RelativeLayout) findViewById(R.id.rl_content);
         rl_background = (RelativeLayout) findViewById(R.id.rl_background);
         rl_foreground = (RelativeLayout) findViewById(R.id.rl_foreground);
         fl_activity_main = (FlowLayout) findViewById(R.id.fl_activity_main);
 
+        tv_almost_done = (TextView) findViewById(R.id.tv_almost_done);
+        tv_but_first = (TextView) findViewById(R.id.tv_but_first);
+
+        b_continue = (Button) findViewById(R.id.b_continue);
+
         initializeBackground();
         createChoiceList();
         addChildViewsToFl();
+        initializeAnimation();
     }
+
+    private void initializeAnimation() {
+        tv_almost_done.animate().alpha(0.0f).setStartDelay(1000).setDuration(500).setListener(new Animator.AnimatorListener() {
+            @Override public void onAnimationEnd(Animator animation) {
+                tv_but_first.animate().alpha(1.0f).setDuration(500).start();
+            }
+            @Override public void onAnimationStart(Animator animation) {}
+            @Override public void onAnimationCancel(Animator animation) {}
+            @Override public void onAnimationRepeat(Animator animation) {}
+        }).start();
+
+        rl_text_animation
+                .animate()
+                .alpha(0.0f)
+                .setStartDelay(3000)
+                .setDuration(500)
+                .setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                rl_text_animation.setVisibility(View.GONE);
+                rl_content.animate().alpha(1.0f).setDuration(500).start();
+            }
+            @Override public void onAnimationStart(Animator animation) {}
+            @Override public void onAnimationCancel(Animator animation) {}
+            @Override public void onAnimationRepeat(Animator animation) {}
+        }).start();
+    }
+
 
     private void initializeBackground() {
         colorIndex = 0;
@@ -127,14 +169,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animator animator) {
                     rl_background.setBackgroundColor(colorArray[colorIndex % colorArray.length]);
                     rl_foreground.setVisibility(View.INVISIBLE);
+
+                    b_continue.setTextColor(colorArray[colorIndex % colorArray.length]);
                 }
 
-                @Override
-                public void onAnimationCancel(Animator animator) {
-                }
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-                }
+                @Override public void onAnimationCancel(Animator animator) {}
+                @Override public void onAnimationRepeat(Animator animator) {}
             });
             anim.start();
         }

@@ -14,34 +14,71 @@
         android:visibility="invisible">
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="What are you interested in?"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_above="@+id/fl_activity_main"
-        android:layout_centerHorizontal="true" />
-
-    <com.nex3z.flowlayout.FlowLayout
-        android:id="@+id/fl_activity_main"
+    <RelativeLayout
+        android:id="@+id/rl_text_animation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:childSpacing="auto"
-        app:rowSpacing="16dp"
-        app:childSpacingForLastRow="auto"
-        android:layout_centerInParent="true"/>
+        android:layout_height="match_parent"
+        android:background="#0588FA">
 
-    <Button
+        <TextView
+            android:id="@+id/tv_almost_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Almost Done!"
+            android:textSize="36sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_but_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="But First..."
+            android:textSize="36sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:alpha="0"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#66FFFFFF"
-        android:text="Continue"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="match_parent"
+        android:alpha="0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tell us what you're interested in"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_above="@+id/fl_activity_main"
+            android:layout_centerHorizontal="true" />
+
+        <com.nex3z.flowlayout.FlowLayout
+            android:id="@+id/fl_activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:childSpacing="auto"
+            app:rowSpacing="16dp"
+            app:childSpacingForLastRow="auto"
+            android:layout_centerInParent="true"/>
+
+        <Button
+            android:id="@+id/b_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="Continue"
+            android:textColor="#0588FA"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
