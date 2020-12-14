@@ -3,11 +3,6 @@ package divyanshu.miscellaneous;
 import android.animation.Animator;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.Build;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -18,6 +13,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.nex3z.flowlayout.FlowLayout;
 
@@ -43,28 +41,25 @@ public class MainActivity extends AppCompatActivity {
     int colorIndex;
     int[] colorArray;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         setContentView(R.layout.activity_main);
 
-        rl_text_animation = (RelativeLayout) findViewById(R.id.rl_text_animation);
-        rl_content = (RelativeLayout) findViewById(R.id.rl_content);
-        rl_background = (RelativeLayout) findViewById(R.id.rl_background);
-        rl_foreground = (RelativeLayout) findViewById(R.id.rl_foreground);
-        fl_activity_main = (FlowLayout) findViewById(R.id.fl_activity_main);
+        rl_text_animation = findViewById(R.id.rl_text_animation);
+        rl_content = findViewById(R.id.rl_content);
+        rl_background = findViewById(R.id.rl_background);
+        rl_foreground = findViewById(R.id.rl_foreground);
+        fl_activity_main = findViewById(R.id.fl_activity_main);
 
-        tv_almost_done = (TextView) findViewById(R.id.tv_almost_done);
-        tv_but_first = (TextView) findViewById(R.id.tv_but_first);
+        tv_almost_done = findViewById(R.id.tv_almost_done);
+        tv_but_first = findViewById(R.id.tv_but_first);
 
-        b_continue = (Button) findViewById(R.id.b_continue);
+        b_continue = findViewById(R.id.b_continue);
 
         initializeBackground();
         createChoiceList();
@@ -172,32 +167,29 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeBackgroundColor(int cx, int cy) {
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        int finalRadius = (int) Math.hypot(rl_background.getWidth(), rl_background.getHeight());
+        Animator anim = ViewAnimationUtils.createCircularReveal(rl_foreground, cx, cy, 0, finalRadius);
+        anim.setDuration(300);
 
-            int finalRadius = (int) Math.hypot(rl_background.getWidth(), rl_background.getHeight());
-            Animator anim = ViewAnimationUtils.createCircularReveal(rl_foreground, cx, cy, 0, finalRadius);
-            anim.setDuration(300);
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                rl_foreground.setBackgroundColor(colorArray[++colorIndex % colorArray.length]);
+                rl_foreground.setVisibility(View.VISIBLE);
 
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                    rl_foreground.setBackgroundColor(colorArray[++colorIndex % colorArray.length]);
-                    rl_foreground.setVisibility(View.VISIBLE);
+                b_continue.setTextColor(colorArray[colorIndex % colorArray.length]);
+            }
 
-                    b_continue.setTextColor(colorArray[colorIndex % colorArray.length]);
-                }
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                rl_background.setBackgroundColor(colorArray[colorIndex % colorArray.length]);
+                rl_foreground.setVisibility(View.INVISIBLE);
+            }
 
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    rl_background.setBackgroundColor(colorArray[colorIndex % colorArray.length]);
-                    rl_foreground.setVisibility(View.INVISIBLE);
-                }
-
-                @Override public void onAnimationCancel(Animator animator) {}
-                @Override public void onAnimationRepeat(Animator animator) {}
-            });
-            anim.start();
-        }
+            @Override public void onAnimationCancel(Animator animator) {}
+            @Override public void onAnimationRepeat(Animator animator) {}
+        });
+        anim.start();
     }
 
     View.OnClickListener choiceItemClickListener = new View.OnClickListener() {
