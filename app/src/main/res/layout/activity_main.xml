@@ -1,18 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout android:id="@+id/rl_background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="divyanshu.miscellaneous.MainActivity">
+    tools:context="divyanshu.miscellaneous.MainActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:id="@+id/rl_foreground"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:visibility="invisible">
+    </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/rl_text_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color_0">
+
+        <TextView
+            android:id="@+id/tv_almost_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Almost Done!"
+            android:textSize="36sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_but_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="But First..."
+            android:textSize="36sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:alpha="0"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0">
+
+        <TextView
+            android:id="@+id/tv_interested_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tell us what you're interested in"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="40dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_interested_in"
+            android:layout_above="@+id/b_continue"
+            android:layout_centerInParent="true"
+            android:fadeScrollbars="false"
+            android:scrollbarThumbVertical="@android:color/white"
+            android:scrollbarSize="2dp">
+
+            <com.nex3z.flowlayout.FlowLayout
+                android:id="@+id/fl_activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="32dp"
+                android:paddingBottom="32dp"
+                app:childSpacing="auto"
+                app:rowSpacing="32dp"
+                app:childSpacingForLastRow="auto" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/b_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:text="Continue"
+            android:textColor="@color/bg_color_0"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
